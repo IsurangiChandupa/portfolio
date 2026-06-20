@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isurangi Chandupa — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f0e8;
+    --cream: #ede7d9;
+    --accent: #2dc499;
+    --accent2: #020b0f;
+    --muted: #7a7060;
+    --line: rgba(13,13,13,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 4rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(4px);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 2px;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    position: relative;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 4rem 6rem 6rem;
+    border-right: 1px solid var(--line);
+    position: relative;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 7vw, 7rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 38ch;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-block;
+  }
+
+  .btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .btn-accent {
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
+  }
+
+  .btn-accent:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-img-frame {
+    position: relative;
+    width: 280px;
+    height: 340px;
+  }
+
+  .hero-img-frame::before {
+    content: '';
+    position: absolute;
+    inset: -1rem;
+    border: 1px solid var(--line);
+    transform: rotate(3deg);
+  }
+
+  .hero-img-frame::after {
+    content: '';
+    position: absolute;
+    inset: -0.5rem;
+    border: 1px solid var(--accent);
+    opacity: 0.3;
+    transform: rotate(-2deg);
+  }
+
+  .hero-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    position: relative;
+    z-index: 1;
+    filter: sepia(15%) contrast(1.05);
+  }
+
+  .hero-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-photo-placeholder svg {
+    width: 80px;
+    opacity: 0.3;
+  }
+
+  .hero-stats {
+    margin-top: 3rem;
+    display: flex;
+    gap: 2.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--accent);
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  /* ── SECTION BASE ── */
+  section {
+    padding: 7rem 6rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  h2 {
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+
+  h2 em { font-style: italic; color: var(--accent); }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 1.15rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text p strong {
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .skills-panel {
+    border: 1px solid var(--line);
+    padding: 2.5rem;
+    background: var(--cream);
+  }
+
+  .skills-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+
+  .tag.accent { border-color: var(--accent); color: var(--accent); }
+  .tag.blue { border-color: var(--accent2); color: var(--accent2); }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+
+  .project-card {
+    padding: 3rem;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+  }
+
+  .project-card:nth-child(even) { border-right: none; }
+  .project-card:last-child:nth-child(odd) { border-right: none; }
+  .project-card:nth-last-child(-n+2) { border-bottom: none; }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .project-card:hover { background: var(--cream); }
+  .project-card:hover::before { transform: scaleX(1); }
+
+  .project-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .project-card h3 {
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .project-card p {
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tech-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.7rem;
+    background: var(--ink);
+    color: var(--paper);
+    text-transform: uppercase;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+
+  .edu-item {
+    display: grid;
+    grid-template-columns: 180px 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    padding: 2.5rem 3rem;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    transition: background 0.2s ease;
+  }
+
+  .edu-item:last-child { border-bottom: none; }
+  .edu-item:hover { background: var(--cream); }
+
+  .edu-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    padding-top: 0.3rem;
+    text-transform: uppercase;
+  }
+
+  .edu-name { font-size: 1.3rem; font-weight: 400; margin-bottom: 0.3rem; }
+  .edu-degree { font-size: 0.9rem; color: var(--muted); font-weight: 300; }
+
+  .edu-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-transform: uppercase;
+    white-space: nowrap;
+    align-self: start;
+  }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .contact-left h2 { margin-bottom: 1.5rem; }
+
+  .contact-left p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.2rem 1.5rem;
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.25s ease;
+    background: var(--cream);
+  }
+
+  .contact-row:hover {
+    border-color: var(--accent);
+    background: var(--paper);
+  }
+
+  .contact-row-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    min-width: 60px;
+  }
+
+  .contact-row-val {
+    font-size: 0.95rem;
+    font-weight: 300;
+  }
+
+  .contact-right {
+    border: 1px solid var(--line);
+    padding: 3rem;
+    background: var(--cream);
+  }
+
+  .contact-right h3 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ref-item {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ref-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .ref-name { font-size: 1.1rem; font-weight: 400; margin-bottom: 0.2rem; }
+  .ref-role { font-size: 0.85rem; color: var(--accent); font-weight: 300; margin-bottom: 0.5rem; font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .ref-contact { font-size: 0.85rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2.5rem 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--line);
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-left > * {
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+  }
+
+  .hero-tag { animation-delay: 0.1s; }
+  .hero-left h1 { animation-delay: 0.25s; }
+  .hero-desc { animation-delay: 0.4s; }
+  .hero-cta { animation-delay: 0.55s; }
+
+  .hero-right {
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  /* scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── EXTRA CURRICULAR ── */
+  .extras {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .extra-card {
+    border: 1px solid var(--line);
+    padding: 1.5rem 2rem;
+    background: var(--cream);
+    flex: 1;
+    min-width: 200px;
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--muted);
+    position: relative;
+    padding-left: 3rem;
+  }
+
+  .extra-card::before {
+    content: '✦';
+    position: absolute;
+    left: 1.2rem;
+    top: 1.5rem;
+    color: var(--accent);
+    font-size: 0.7rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 2rem; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 5rem 2rem 3rem; border-right: none; border-bottom: 1px solid var(--line); }
+    .hero-right { padding: 3rem 2rem 5rem; }
+    section { padding: 5rem 2rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card { border-right: none !important; }
+    .project-card:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+    .project-card:last-child { border-bottom: none; }
+    .edu-item { grid-template-columns: 1fr; gap: 0.8rem; }
+    .contact-section { grid-template-columns: 1fr; gap: 3rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Isurangi Chandupa</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="border-bottom: 1px solid var(--line); padding: 0;">
+  <div class="hero-left">
+    <div class="hero-tag">Computer Science Undergraduate</div>
+    <h1>Isurangi<br><em>Chandupa</em></h1>
+    <p class="hero-desc">
+      Second-year Computer Science student at IIT passionate about building clean and effective web applications. I enjoy turning ideas into simple, working software that solves real problems. I am also interested in QA and software testing, making sure applications are reliable, user-friendly, and bug-free. I’m continuously learning programming, web development, and testing practices, with a growing interest in AI and modern technologies. My goal is to improve my skills and build quality software that people can trust and enjoy using.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-accent">View Projects</a>
+      <a href="#contact" class="btn">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-frame">
+      <div class="hero-photo-placeholder">
+        <img src="Gemini_Generated_Image_sanydusanydusany.png" alt="Isurangi Chandupa" class="hero-photo">
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Years Study</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Tech Skills</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">01 — About</div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <h2>Passionate about <em>problem-solving</em><br>& building clean, reliable software</h2>
+      <p>
+        I'm a second-year <strong>BSc (Hons) Computer Science</strong> undergraduate at the Informatics Institute of Technology (IIT), Colombo. I enjoy creating simple, efficient web applications that solve real-world problems and deliver smooth user experiences.
+      </p>
+      <p>
+        My technical skills include <strong>Python, Java, SQL, HTML & CSS</strong>, along with hands-on experience in web development and team-based projects. I also have a strong interest in QA and software testing, focusing on building software that is functional, reliable, and user-friendly.
+      </p>
+      <p>
+        Beyond academics, I served as a <strong>Senior Prefect at Sri Rahula College,</strong> where I developed leadership, responsibility, and strong decision-making skills.
+      </p>
+      <div class="extras">
+        <div class="extra-card">School Prefect, Sri Rahula College</div>
+      </div>
+    </div>
+    <div class="skills-panel">
+      <div class="skills-title">Technical Skills</div>
+      <div class="skill-tags">
+        <span class="tag accent">Python</span>
+        <span class="tag accent">Java</span>
+        <span class="tag accent">CSS</span>
+        <span class="tag accent">HTML</span>
+        <span class="tag accent">MySQL</span>
+        <span class="tag accent">SDLC</span>
+        <span class="tag accent">Postman</span>
+        <span class="tag accent">Git & Github</span>
+        <span class="tag blue">Flutter</span>
+        <span class="tag blue">Node.js</span>
+      </div>
+      <div class="skills-title">Soft Skills</div>
+      <div class="skill-tags">
+        <span class="tag">Time Management</span>
+        <span class="tag">Team Work</span>
+        <span class="tag">Problem Solving</span>
+        <span class="tag">Attention to Details</span>
+      </div>
+      <div class="skills-title" style="margin-top:1rem;">Awards</div>
+      <div class="skill-tags">
+        <span class="tag blue">ML Certificate — IIT</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background: var(--cream);">
+  <div class="section-label">02 — Projects</div>
+  <h2>Selected <em>Work</em></h2>
+  <div class="projects-grid reveal">
+
+    <div class="project-card">
+      <div class="project-year">2026 </div>
+      <h3>TECHNI</h3>
+      <p>An AI-powered mobile marketplace in Flutter and Node.js connecting users with skilled trade workers across Sri Lanka, featuring AI repair diagnostics and real-time GPS tracking.</p>
+      <div class="project-tech">
+        <span class="tech-chip">Flutter</span>
+        <span class="tech-chip">Node.js</span>
+        <span class="tech-chip">AI</span>
+        <span class="tech-chip">GPS</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-year">2026</div>
+      <h3>Library Management System</h3>
+      <p>Designed and developed a full-stack Library Management System desktop application using Java, JavaFX, and MySQL, implementing core features including book inventory management, member registration, and a transactional borrow/return system with real-time availability tracking.</p>
+      <div class="project-tech">
+        <span class="tech-chip">Java</span>
+        <span class="tech-chip">JavaFX</span>
+        <span class="tech-chip">MySQL</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-year">2026 - Ongoing</div>
+      <h3>Personal Task Manager</h3>
+      <p>Build a to-do app with user login, task CRUD, due dates, and priority levels. Covers authentication, Entity Framework, and Razor Pages/MVC — the core ASP.NET stack.</p>
+      <div class="project-tech">
+        <span class="tech-chip">C#</span>
+        <span class="tech-chip">ASP.NET Core MVC</span>
+        <span class="tech-chip">Entity Framework Core</span>
+        <span class="tech-chip">SQL Server (LocalDB)</span>
+        <span class="tech-chip">ASP.NET Core Identity</span>
+        <span class="tech-chip">Razor + Bootstrap</span>
+        <span class="tech-chip">.NET CLI, NuGet, EF Migrations</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-year">2026 - Ongoing</div>
+      <h3>URL Shortener</h3>
+      <p> This full-stack URL shortening service compresses lengthy web addresses into unique, compact aliases via a RESTful architecture. The system leverages server-side routing to seamlessly execute low-latency HTTP redirects when a shortened link is accessed. By integrating cloud database storage, the application enforces rigid data validation and securely stores link pairs. Additionally, it implements built-in click-tracking functionality to monitor real-time user engagement and traffic metrics.</p>
+      <div class="project-tech">
+        <span class="tech-chip">Node.js</span>
+        <span class="tech-chip">Express.js</span>
+        <span class="tech-chip">MongoDB Atlas</span>
+        <span class="tech-chip">Mongoose</span>
+        <span class="tech-chip">Postman</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">03 — Education</div>
+  <h2>Academic <em>Journey</em></h2>
+  <div class="edu-list reveal">
+
+    <div class="edu-item">
+      <div class="edu-period">2025 — Present</div>
+      <div>
+        <div class="edu-name">Informatics Institute of Technology (IIT)</div>
+        <div class="edu-degree">BSc (Hons) Computer Science — in partnership with University of Westminster</div>
+      </div>
+      <div class="edu-badge">Current</div>
+    </div>
+
+    <div class="edu-item">
+      <div class="edu-period">Jan 2024 — Aug 2024</div>
+      <div>
+        <div class="edu-name">Informatics Institute of Technology (IIT)</div>
+        <div class="edu-degree">One Year Foundation Certificate in Higher Education — IT</div>
+      </div>
+      <div class="edu-badge">Merit</div>
+    </div>
+
+    <div class="edu-item">
+      <div class="edu-period">School</div>
+      <div>
+        <div class="edu-name">Sri Rahula College, Anuradhapura</div>
+        <div class="edu-degree">O/L — 4As, 4Bs, 1C &nbsp;·&nbsp; School Prefect</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">04 — Contact</div>
+  <div class="contact-section reveal">
+    <div class="contact-left">
+      <h2>Let's <em>Connect</em></h2>
+      <p>I'm actively looking for internship and collaboration opportunities. Whether you have a project idea or just want to say hello — my inbox is always open.</p>
+      <div class="contact-info">
+        <a href="tel:+94762929445" class="contact-row">
+          <span class="contact-row-icon">Phone</span>
+          <span class="contact-row-val">+94 76 2929 445</span>
+        </a>
+        <a href="mailto:isurangigunerathna@gmail.com" class="contact-row">
+          <span class="contact-row-icon">Email</span>
+          <span class="contact-row-val">isurangigunerathna@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com" target="_blank" class="contact-row">
+          <span class="contact-row-icon">LinkedIn</span>
+          <span class="contact-row-val">LinkedIn Profile</span>
+        </a>
+        <div class="contact-row" style="cursor:default;">
+          <span class="contact-row-icon">Address</span>
+          <span class="contact-row-val">No.6B, 35/2, Housing Scheme, Mattegoda</span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <h3>References</h3>
+      <div class="ref-item">
+        <div class="ref-name">Hiruni Kasthuriarachchi</div>
+        <div class="ref-role">Visiting Lecturer — IIT</div>
+        <div class="ref-contact">
+          hiruni.k@iit.ac.lk<br>
+          +94 71 791 8648
+        </div>
+      </div>
+      <div class="ref-item">
+        <div class="ref-name">Hasini Kasthuriarachchi</div>
+        <div class="ref-role">Former Assistant Lecturer — IIT</div>
+        <div class="ref-contact">
+          hasinii.k@iit.ac.lk<br>
+          +94 71 200 7026
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Isurangi Chandupa</p>
+  <p>Computer Science Undergraduate — IIT</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
